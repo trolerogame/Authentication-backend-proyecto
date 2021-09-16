@@ -1,13 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "author":"Daniel Campos",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@graphql-tools/schema": "^8.2.0",

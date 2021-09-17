@@ -5,7 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "desarrolo": "nodemon src/index.ts",
+    "build":"tsc",
+    "start":"node dist/index.js"
   },
   "keywords": [],
   "license": "ISC",

@@ -22,7 +22,7 @@ app.use('/',graphqlHTTP({
     graphiql:false
 }))
 
-app.get('/',(req,res) => {
+app.get('/hola_mundo',(req,res) => {
     res.send('hola mundo')
 })
 

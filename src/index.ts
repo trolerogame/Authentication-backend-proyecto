@@ -16,13 +16,13 @@ const schema = makeExecutableSchema({typeDefs,resolvers})
 
 // configs
 app.use(cors())
-app.use('/',graphqlHTTP({
+app.use('/graphql',graphqlHTTP({
     schema,
     rootValue:resolvers,
     graphiql:false
 }))
 
-app.get('/hola_mundo',(req,res) => {
+app.get('/',(req,res) => {
     res.send('hola mundo')
 })
 

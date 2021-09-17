@@ -22,6 +22,10 @@ app.use('/',graphqlHTTP({
     graphiql:false
 }))
 
+app.get('/',(req,res) => {
+    res.send('hola mundo')
+})
+
 // server 
 app.listen(process.env.PORT,() => 
     console.log('server conectado')

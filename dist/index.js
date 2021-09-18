@@ -6,26 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
-// import {graphqlHTTP} from 'express-graphql'
-// import {makeExecutableSchema} from '@graphql-tools/schema'
-// import { join } from 'path'
-// import {readFileSync} from 'fs'
-// import cors from 'cors'
-// import resolvers from './controllers/resolvers'
+const express_graphql_1 = require("express-graphql");
+const schema_1 = require("@graphql-tools/schema");
+const path_1 = require("path");
+const fs_1 = require("fs");
+const cors_1 = __importDefault(require("cors"));
+const resolvers_1 = __importDefault(require("./controllers/resolvers"));
 // import './db/connect'
-// // initials
+// initials
 const app = (0, express_1.default)();
-// const typeDefs = readFileSync(join(__dirname,'schemas.graphql'),'utf-8')
-// const schema = makeExecutableSchema({typeDefs,resolvers})
+const typeDefs = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, 'schemas.graphql'), 'utf-8');
+const schema = (0, schema_1.makeExecutableSchema)({ typeDefs, resolvers: resolvers_1.default });
 // configs
-// app.use(cors({optionsSuccessStatus: 200}))
-// app.use(json())
-// app.use(urlencoded({ extended: true }))
-// app.use('/graphql',graphqlHTTP({
-//     schema,
-//     rootValue:resolvers,
-//     graphiql:false
-// }))
+app.use((0, cors_1.default)({ optionsSuccessStatus: 200 }));
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use('/graphql', (0, express_graphql_1.graphqlHTTP)({
+    schema,
+    rootValue: resolvers_1.default,
+    graphiql: false
+}));
 app.get('/', (req, res) => {
     res.send('hola mundo');
 });

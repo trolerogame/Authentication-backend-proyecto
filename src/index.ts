@@ -3,8 +3,6 @@ config()
 import express from 'express'
 import {graphqlHTTP} from 'express-graphql'
 import {makeExecutableSchema} from '@graphql-tools/schema'
-import { join } from 'path'
-import {readFileSync} from 'fs'
 import cors from 'cors'
 import resolvers from './controllers/resolvers'
 // import './db/connect'
@@ -48,7 +46,7 @@ const typeDefs = `
         loginUser(email:String,password:String):User
     }
 `
-const schema = makeExecutableSchema({typeDefs,resolvers})
+// const schema = makeExecutableSchema({typeDefs,resolvers})
 
 // configs
 // app.use(cors({optionsSuccessStatus: 200}))

@@ -19,10 +19,13 @@ const typeDefs = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, 'schemas.gra
 const schema = (0, schema_1.makeExecutableSchema)({ typeDefs, resolvers: resolvers_1.default });
 // configs
 app.use((0, cors_1.default)());
-app.use('/', (0, express_graphql_1.graphqlHTTP)({
+app.use('/graphql', (0, express_graphql_1.graphqlHTTP)({
     schema,
     rootValue: resolvers_1.default,
     graphiql: false
 }));
+app.get('/', (req, res) => {
+    res.send('hola mundo');
+});
 // server 
-app.listen(process.env.PORT, () => console.log('server conectado'));
+app.listen(process.env.PORT || 3000, () => console.log('server conectado'));

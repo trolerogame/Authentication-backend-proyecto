@@ -1,6 +1,6 @@
 import {config} from 'dotenv'
 config()
-import express from 'express'
+import express,{json,urlencoded} from 'express'
 import {graphqlHTTP} from 'express-graphql'
 import {makeExecutableSchema} from '@graphql-tools/schema'
 import { join } from 'path'
@@ -16,6 +16,8 @@ const schema = makeExecutableSchema({typeDefs,resolvers})
 
 // configs
 app.use(cors())
+app.use(json())
+app.use(urlencoded({ extended: true }))
 app.use('/graphql',graphqlHTTP({
     schema,
     rootValue:resolvers,

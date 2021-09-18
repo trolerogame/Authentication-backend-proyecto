@@ -60,8 +60,5 @@ server.start().then(() => {
 });
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.get('/', (req, res) => {
-    res.send('hola mundo');
-});
 // server 
 app.listen(process.env.PORT || 3000, () => console.log('server conectado'));

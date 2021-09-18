@@ -56,10 +56,6 @@ server.start().then(() => {
 app.use(cors())
 app.use(express.json())
 
-app.get('/',(req,res) => {
-    res.send('hola mundo')
-})
-
 // server 
 app.listen(process.env.PORT || 3000,() => 
     console.log('server conectado')

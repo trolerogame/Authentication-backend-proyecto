@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
-// import { join } from 'path'
-// import {readFileSync} from 'fs'
-// import cors from 'cors'
-// import resolvers from './controllers/resolvers'
 // import './db/connect'
 // initials
 const app = (0, express_1.default)();

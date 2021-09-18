@@ -5,7 +5,7 @@ import {graphqlHTTP} from 'express-graphql'
 import {makeExecutableSchema} from '@graphql-tools/schema'
 import cors from 'cors'
 import resolvers from './controllers/resolvers'
-// import './db/connect'
+import './db/connect'
 
 // initials
 const app = express()
@@ -49,9 +49,9 @@ const typeDefs = `
 // const schema = makeExecutableSchema({typeDefs,resolvers})
 
 // configs
-// app.use(cors({optionsSuccessStatus: 200}))
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: true }))
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 // app.use('/graphql',graphqlHTTP({
 //     schema,
 //     rootValue:resolvers,

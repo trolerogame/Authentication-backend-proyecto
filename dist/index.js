@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
-// import './db/connect'
+const cors_1 = __importDefault(require("cors"));
+require("./db/connect");
 // initials
 const app = (0, express_1.default)();
 const typeDefs = `
@@ -48,9 +49,9 @@ const typeDefs = `
 `;
 // const schema = makeExecutableSchema({typeDefs,resolvers})
 // configs
-// app.use(cors({optionsSuccessStatus: 200}))
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: true }))
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 // app.use('/graphql',graphqlHTTP({
 //     schema,
 //     rootValue:resolvers,

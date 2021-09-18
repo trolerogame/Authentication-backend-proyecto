@@ -8,14 +8,14 @@ const dotenv_1 = require("dotenv");
 const express_1 = __importDefault(require("express"));
 // import {graphqlHTTP} from 'express-graphql'
 // import {makeExecutableSchema} from '@graphql-tools/schema'
-const path_1 = require("path");
-const fs_1 = require("fs");
+// import { join } from 'path'
+// import {readFileSync} from 'fs'
 // import cors from 'cors'
 // import resolvers from './controllers/resolvers'
 // import './db/connect'
 // initials
 const app = (0, express_1.default)();
-const typeDefs = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, 'schemas.graphql'), 'utf-8');
+// const typeDefs = readFileSync(join(__dirname,'schemas.graphql'),'utf-8')
 // const schema = makeExecutableSchema({typeDefs,resolvers})
 // configs
 // app.use(cors({optionsSuccessStatus: 200}))

@@ -1,8 +1,8 @@
 import {config} from 'dotenv'
 config()
 import express from 'express'
-// import {graphqlHTTP} from 'express-graphql'
-// import {makeExecutableSchema} from '@graphql-tools/schema'
+import {graphqlHTTP} from 'express-graphql'
+import {makeExecutableSchema} from '@graphql-tools/schema'
 // import { join } from 'path'
 // import {readFileSync} from 'fs'
 // import cors from 'cors'

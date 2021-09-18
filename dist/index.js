@@ -6,11 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
+const schema_1 = require("@graphql-tools/schema");
+const path_1 = require("path");
+const fs_1 = require("fs");
+const resolvers_1 = __importDefault(require("./controllers/resolvers"));
 // import './db/connect'
 // initials
 const app = (0, express_1.default)();
-// const typeDefs = readFileSync(join(__dirname,'schemas.graphql'),'utf-8')
-// const schema = makeExecutableSchema({typeDefs,resolvers})
+const typeDefs = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, 'schemas.graphql'), 'utf-8');
+const schema = (0, schema_1.makeExecutableSchema)({ typeDefs, resolvers: resolvers_1.default });
 // configs
 // app.use(cors({optionsSuccessStatus: 200}))
 // app.use(express.json())

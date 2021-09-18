@@ -11,8 +11,8 @@ import resolvers from './controllers/resolvers'
 
 // initials
 const app = express()
-// const typeDefs = readFileSync(join(__dirname,'schemas.graphql'),'utf-8')
-// const schema = makeExecutableSchema({typeDefs,resolvers})
+const typeDefs = readFileSync(join(__dirname,'schemas.graphql'),'utf-8')
+const schema = makeExecutableSchema({typeDefs,resolvers})
 
 // configs
 // app.use(cors({optionsSuccessStatus: 200}))

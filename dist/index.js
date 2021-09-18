@@ -9,7 +9,7 @@ const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const cors_1 = __importDefault(require("cors"));
 const resolvers_1 = __importDefault(require("./controllers/resolvers"));
-const TypeDefs_1 = require("./TypeDefs");
+const TypeDefs_1 = require("./model/TypeDefs");
 require("./db/connect");
 // const typeDefs = gql`
 // type User{

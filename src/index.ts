@@ -4,7 +4,7 @@ import express from 'express'
 import {ApolloServer,gql} from 'apollo-server-express'
 import cors from 'cors'
 import resolvers from './controllers/resolvers'
-import {typeDefs} from './TypeDefs'
+import {typeDefs} from './model/TypeDefs'
 import './db/connect'
 // const typeDefs = gql`
 // type User{

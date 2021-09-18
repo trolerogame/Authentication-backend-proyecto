@@ -46,7 +46,7 @@ const typeDefs = `
         loginUser(email:String,password:String):User
     }
 `
-// const schema = makeExecutableSchema({typeDefs,resolvers})
+const schema = makeExecutableSchema({typeDefs,resolvers})
 
 // configs
 app.use(cors())

@@ -1,9 +1,10 @@
-import User from "../model/User"
-const getUser = async (root:any,args:any) => {
-    try{
-        return await User.findById(args.id) 
-    }catch(err){
-        console.log(err)
-    }
+import User from '../model/User'
+export const getUser = async (_: any, args: any, context: any) => {
+	if (context.permission) {
+		try {
+			return await User.findById(context.data._id)
+		} catch (err) {
+			console.log(err)
+		}
+	}
 }
-export {getUser}

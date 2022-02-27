@@ -99,7 +99,7 @@ const server = new ApolloServer({
 app.use(express.static(path.join(__dirname,'/')))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-	origin:"https://authentication-frontend-proyecto.vercel.app/"
+	origin:"https://authentication-frontend-proyecto.vercel.app"
 }))
 app.use(express.json())
  

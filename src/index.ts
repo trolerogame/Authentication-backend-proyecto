@@ -114,6 +114,8 @@ app.post('/uploadFile/',upload.single('file'),async (req:Request,res:Response) =
 
 // server
 server.start().then(() => {
-	server.applyMiddleware({ app, path: '/graphql' })
+	server.applyMiddleware({ app, path: '/graphql',cors:{
+		origin:'https://authentication-frontend-proyecto.vercel.app'
+	} })
 })
 app.listen(process.env.PORT || 3000, () => console.log('server conectado'))

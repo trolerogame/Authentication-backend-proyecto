@@ -8,7 +8,21 @@ import auth from './auth'
 import path from 'path'
 import multer from 'multer'
 import { v4 } from 'uuid'
+// import {Deta} from 'deta'
 import './db/connect'
+import {v2 as cloudinary} from 'cloudinary'
+
+cloudinary.config({
+	cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+	api_key:process.env.CLOUDINARY_API_KEY,
+	api_secret:process.env.CLOUDINARY_API_SECRET
+})
+
+
+
+// const deta = Deta('')
+// const db = deta.Base('simpleDB')
+
 
 const storage = multer.diskStorage({
 	destination: __dirname + '/uploads',
@@ -81,6 +95,7 @@ const server = new ApolloServer({
 	context: auth,
 })
 // configs
+
 app.use(express.static(path.join(__dirname,'/')))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
@@ -89,8 +104,10 @@ app.use(express.json())
 
 // routes
 
-app.post('/uploadFile/',upload.single('file'),(req:Request,res:Response) => {
-	req.file ? res.json({file:req.file.filename}) : res.json({file:''})
+app.post('/uploadFile/',upload.single('file'),async (req:Request,res:Response) => {
+	if(!req.file) return res.json({file:''})
+	const cloud = await cloudinary.uploader.upload(req.file.path)
+	res.json({file:cloud.secure_url})
 })
 
 // server

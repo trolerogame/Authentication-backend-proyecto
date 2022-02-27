@@ -43,7 +43,6 @@ export const editUser = async (
 ) => {
 	if (context.permission) {
 		const { username, email, password, bio, phone, photo } = input
-		console.log(input)
 		 
 		const { _id: id } = context.data
 		try {		
@@ -56,7 +55,7 @@ export const editUser = async (
 					: user?.password,
 				bio: bio || user?.bio,
 				phone: phone || user?.phone,
-				photo: photo ? process.env.DOMAIN! + photo : user?.photo,
+				photo: photo ? photo : user?.photo,
 				passwordLength: password
 					? '*'.repeat(password.length)
 					: user?.passwordLength,

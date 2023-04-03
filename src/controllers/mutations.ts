@@ -1,21 +1,11 @@
 import User from '../model/User'
-import { encryptPassword, validatePass } from '../functions/bcrypts'
+import { encryptPassword, validatePass, createToken } from '../utils'
 import { UserType } from '../type'
-import jwt from 'jsonwebtoken'
 import path from 'path'
 import fs from 'fs'
 import {v4 as uuidv4} from 'uuid'
 
-const createtoken = async (_id:string) => {
-	const jwtData: string = await jwt.sign(
-		JSON.stringify({_id}),
-		process.env.SECRET!
-	)
-	return jwtData
-}
-
-
-export const createUser = async (_: any, { input }: UserType) => {
+export const createUser = async (_: any, { input }: {input:UserType}) => {
 	const { email, password } = input
 	const passEncrypt = await encryptPassword(password!)
 	try {
@@ -61,7 +51,7 @@ export const editUser = async (
 					: user?.passwordLength,
 			})
 			return {
-				token:createtoken(id)
+				token:createToken(id)
 			}
 		} catch (err:any) {
 			return {
@@ -76,15 +66,13 @@ export const loginUser = async (
 	{ email, password }: { email: string; password: string }
 ) => {
 	try {
-		const user = await User.findOne({ email })
+		const user:UserType|null = await User.findOne({ email })
 		if (!user) throw new Error('Este usuario no existe')
 		const compare = await validatePass(password, user.password!)
 		if (!compare) throw new Error('la contraseña o el email no coinciden')
-		const {username,phone,bio,photo,passwordLength} = user
-		const userCopy = {username,phone,bio,photo,email,passwordLength}
 		return {
-			token:createtoken(user._id),
-			user:userCopy
+			token:createToken(user._id!),
+			user:user
 		}
 	} catch (err:any) {
 		return {

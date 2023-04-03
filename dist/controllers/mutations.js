@@ -5,18 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadFile = exports.loginUser = exports.editUser = exports.createUser = void 0;
 const User_1 = __importDefault(require("../model/User"));
-const bcrypts_1 = require("../functions/bcrypts");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const utils_1 = require("../utils");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const uuid_1 = require("uuid");
-const createtoken = async (_id) => {
-    const jwtData = await jsonwebtoken_1.default.sign(JSON.stringify({ _id }), process.env.SECRET);
-    return jwtData;
-};
 const createUser = async (_, { input }) => {
     const { email, password } = input;
-    const passEncrypt = await (0, bcrypts_1.encryptPassword)(password);
+    const passEncrypt = await (0, utils_1.encryptPassword)(password);
     try {
         await User_1.default.create({
             username: email?.split('@')[0],
@@ -46,7 +41,7 @@ const editUser = async (root, { input }, context) => {
                 username: username || user?.username,
                 email: email || user?.email,
                 password: password
-                    ? await (0, bcrypts_1.encryptPassword)(password)
+                    ? await (0, utils_1.encryptPassword)(password)
                     : user?.password,
                 bio: bio || user?.bio,
                 phone: phone || user?.phone,
@@ -56,7 +51,7 @@ const editUser = async (root, { input }, context) => {
                     : user?.passwordLength,
             });
             return {
-                token: createtoken(id)
+                token: (0, utils_1.createToken)(id)
             };
         }
         catch (err) {
@@ -72,14 +67,12 @@ const loginUser = async (_, { email, password }) => {
         const user = await User_1.default.findOne({ email });
         if (!user)
             throw new Error('Este usuario no existe');
-        const compare = await (0, bcrypts_1.validatePass)(password, user.password);
+        const compare = await (0, utils_1.validatePass)(password, user.password);
         if (!compare)
             throw new Error('la contraseña o el email no coinciden');
-        const { username, phone, bio, photo, passwordLength } = user;
-        const userCopy = { username, phone, bio, photo, email, passwordLength };
         return {
-            token: createtoken(user._id),
-            user: userCopy
+            token: (0, utils_1.createToken)(user._id),
+            user: user
         };
     }
     catch (err) {

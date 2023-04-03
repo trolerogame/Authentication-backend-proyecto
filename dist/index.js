@@ -3,8 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)();
+const config_1 = require("./config");
 const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const cors_1 = __importDefault(require("cors"));
@@ -13,16 +12,13 @@ const auth_1 = __importDefault(require("./auth"));
 const path_1 = __importDefault(require("path"));
 const multer_1 = __importDefault(require("multer"));
 const uuid_1 = require("uuid");
-// import {Deta} from 'deta'
-require("./db/connect");
 const cloudinary_1 = require("cloudinary");
+require("./db/connect");
 cloudinary_1.v2.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    cloud_name: config_1.config.cloudinaryCloudName,
+    api_key: config_1.config.cloudinaryApiKey,
+    api_secret: config_1.config.cloudinaryApiSecret
 });
-// const deta = Deta('')
-// const db = deta.Base('simpleDB')
 const storage = multer_1.default.diskStorage({
     destination: __dirname + '/uploads',
     filename: (req, file, cb) => {
@@ -96,7 +92,7 @@ const server = new apollo_server_express_1.ApolloServer({
 app.use(express_1.default.static(path_1.default.join(__dirname, '/')));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)({
-    origin: "https://authentication-frontend-proyecto.vercel.app"
+    origin: config_1.config.originCors
 }));
 app.use(express_1.default.json());
 // routes
@@ -109,7 +105,7 @@ app.post('/uploadFile/', upload.single('file'), async (req, res) => {
 // server
 server.start().then(() => {
     server.applyMiddleware({ app, path: '/graphql', cors: {
-            origin: 'https://authentication-frontend-proyecto.vercel.app'
+            origin: config_1.config.originCors
         } });
 });
-app.listen(process.env.PORT || 3000, () => console.log('server conectado'));
+app.listen(config_1.config.port || 3000, () => console.log('server conectado'));

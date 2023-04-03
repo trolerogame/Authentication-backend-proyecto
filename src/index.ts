@@ -1,5 +1,4 @@
-import { config } from 'dotenv'
-config()
+import { config } from './config'
 import express,{Response,Request} from 'express'
 import { ApolloServer, gql } from 'apollo-server-express'
 import cors from 'cors'
@@ -8,20 +7,14 @@ import auth from './auth'
 import path from 'path'
 import multer from 'multer'
 import { v4 } from 'uuid'
-// import {Deta} from 'deta'
-import './db/connect'
 import {v2 as cloudinary} from 'cloudinary'
+import './db/connect'
 
 cloudinary.config({
-	cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
-	api_key:process.env.CLOUDINARY_API_KEY,
-	api_secret:process.env.CLOUDINARY_API_SECRET
+	cloud_name:config.cloudinaryCloudName,
+	api_key:config.cloudinaryApiKey,
+	api_secret:config.cloudinaryApiSecret
 })
-
-
-
-// const deta = Deta('')
-// const db = deta.Base('simpleDB')
 
 
 const storage = multer.diskStorage({
@@ -99,7 +92,7 @@ const server = new ApolloServer({
 app.use(express.static(path.join(__dirname,'/')))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-	origin:"https://authentication-frontend-proyecto.vercel.app"
+	origin:config.originCors
 }))
 app.use(express.json())
  
@@ -115,7 +108,7 @@ app.post('/uploadFile/',upload.single('file'),async (req:Request,res:Response) =
 // server
 server.start().then(() => {
 	server.applyMiddleware({ app, path: '/graphql',cors:{
-		origin:'https://authentication-frontend-proyecto.vercel.app'
+		origin:config.originCors
 	} })
 })
-app.listen(process.env.PORT || 3000, () => console.log('server conectado'))
+app.listen(config.port || 3000, () => console.log('server conectado'))

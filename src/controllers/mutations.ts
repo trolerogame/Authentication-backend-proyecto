@@ -1,9 +1,6 @@
 import User from '../model/User'
 import { encryptPassword, validatePass, createToken } from '../utils'
 import { UserType } from '../type'
-import path from 'path'
-import fs from 'fs'
-import {v4 as uuidv4} from 'uuid'
 
 export const createUser = async (_: any, { input }: {input:UserType}) => {
 	const { email, password } = input
@@ -81,16 +78,3 @@ export const loginUser = async (
 	}
 }
 
-export const uploadFile = async (_: any, { file }: any,context:any) => {
-	// if(context.permission){
-		if (!file) return 'ingrese el archivo'
-		if (!path.extname(file.originalname).match(/jpg|png|jfif|jpeg/g))
-			return 'formato incorrecto'
-		const {createReadStream, originalname} = file
-		const stream = createReadStream()
-		const name = uuidv4()
-		const pathName = path.join(__dirname, `/uploads/${name}` + path.extname(originalname))
-		await stream.pipe(fs.createWriteStream(pathName))
-		return name
-	// }
-}

@@ -5,8 +5,6 @@ import cors from 'cors'
 import resolvers from './controllers/resolvers'
 import auth from './auth'
 import path from 'path'
-import multer from 'multer'
-import { v4 } from 'uuid'
 import {v2 as cloudinary} from 'cloudinary'
 import './db/connect'
 
@@ -16,14 +14,6 @@ cloudinary.config({
 	api_secret:config.cloudinaryApiSecret
 })
 
-
-const storage = multer.diskStorage({
-	destination: __dirname + '/uploads',
-	filename: (req,file,cb) => {
-		cb(null, v4() + path.extname(file.originalname).toLowerCase())
-	}
-})
-const upload = multer({storage})
 
 const typeDefs = gql`
   	scalar Upload
@@ -97,9 +87,9 @@ app.use(express.json())
 
 // routes
 
-app.post('/uploadFile/',upload.single('file'),async (req:Request,res:Response) => {
-	if(!req.file) return res.json({file:''})
-	const cloud = await cloudinary.uploader.upload(req.file.path)
+app.post('/uploadFile/',async (req:Request,res:Response) => {
+	if(!req.body.data) return res.json({file:''})
+	const cloud = await cloudinary.uploader.upload(req.body.data)
 	res.json({file:cloud.secure_url})
 })
 

@@ -1,5 +1,5 @@
 import { getUser } from './Query'
-import { createUser, editUser, loginUser,uploadFile } from './mutations'
+import { createUser, editUser, loginUser } from './mutations'
 import {GraphQLUpload} from 'graphql-upload'
 export default {
 	Upload:GraphQLUpload,
@@ -10,6 +10,5 @@ export default {
 		createUser,
 		editUser,
 		loginUser,
-		uploadFile
 	},
 }

@@ -91,9 +91,7 @@ const server = new ApolloServer({
 
 app.use(express.static(path.join(__dirname,'/')))
 app.use(express.urlencoded({ extended: true }))
-app.use(cors({
-	origin:config.originCors
-}))
+app.use(cors())
 app.use(express.json())
  
 
@@ -107,8 +105,10 @@ app.post('/uploadFile/',upload.single('file'),async (req:Request,res:Response) =
 
 // server
 server.start().then(() => {
-	server.applyMiddleware({ app, path: '/graphql',cors:{
-		origin:config.originCors
-	} })
+	server.applyMiddleware({ app, path: '/graphql',
+	// cors:{
+	// 	origin:config.originCors
+	// } 
+	})
 })
 app.listen(config.port || 3000, () => console.log('server conectado'))
